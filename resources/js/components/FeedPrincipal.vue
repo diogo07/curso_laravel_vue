@@ -11,8 +11,8 @@
           <img :src="imagePath(lista[0].path_image)" class="d-block w-100" alt="..." />
           <div class="carousel-caption d-none d-md-block">
             <a :href="'/noticia/' + lista[0].id">
-              <h5>{{lista[0].titulo}}</h5>
-              <p>{{lista[0].descricao}}</p>
+              <h5 class="titulo">{{lista[0].titulo}}</h5>
+              <p class="descricao">{{lista[0].descricao}}</p>
             </a>
           </div>
         </div>
@@ -21,8 +21,8 @@
           <img :src="imagePath(lista[1].path_image)" class="d-block w-100" alt="..." />
           <div class="carousel-caption d-none d-md-block">
             <a :href="'/noticia/' + lista[1].id">
-              <h5>{{lista[1].titulo}}</h5>
-              <p>{{lista[1].descricao}}</p>
+              <h5 class="titulo">{{lista[1].titulo}}</h5>
+              <p class="descricao">{{lista[1].descricao}}</p>
             </a>
           </div>
         </div>
@@ -31,8 +31,8 @@
           <img :src="imagePath(lista[2].path_image)" class="d-block w-100" alt="..." />
           <div class="carousel-caption d-none d-md-block">
             <a :href="'/noticia/' + lista[2].id">
-              <h5>{{lista[2].titulo}}</h5>
-              <p>{{lista[2].descricao}}</p>
+              <h5 class="titulo">{{lista[2].titulo}}</h5>
+              <p class="descricao">{{lista[2].descricao}}</p>
             </a>
           </div>
         </div>
@@ -71,12 +71,12 @@ export default {
 </script>
 
 <style media="screen">
+  @import url('https://fonts.googleapis.com/css?family=Poppins:800&display=swap');
 
-p,
-h5 {
-  /* color: white; */
-  /* background-color: black; */
-}
+  .titulo{
+    font-size: 30pt;
+    font-family: 'Poppins', sans-serif;
+  }
 
 a:hover{
   text-decoration: none;

@@ -15,9 +15,16 @@
             ></feed>
           </div>
 
-          <button type="button" class="btn btn-info" @click="atualizarNoticias(last_page-2)">Anterior</button>
-          <button type="button" class="btn btn-info" @click="atualizarNoticias(last_page)">Próxima</button>
-          
+           <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item" @click="alterarPagina(dados.first_page_url)"><a class="page-link">Primeiro</a></li>
+              <li v-if="dados.prev_page_url" class="page-item" @click="alterarPagina(dados.prev_page_url)"><a class="page-link">{{dados.current_page - 1}}</a></li>
+              <li class="page-item active"><a class="page-link">{{dados.current_page}}</a></li>
+              <li v-if="dados.next_page_url" class="page-item" @click="alterarPagina(dados.next_page_url)"><a class="page-link">{{dados.current_page + 1}}</a></li>
+              <li class="page-item" @click="alterarPagina(dados.last_page_url)"><a class="page-link">Último</a></li>
+            </ul>
+          </nav>
+
       </span>
         
       <span class="load" v-else>
@@ -32,7 +39,7 @@ export default {
   data(){
     return{
       loading:true,
-      last_page: 0
+      dados: []
     }
   },
   computed: {
@@ -47,13 +54,12 @@ export default {
 
   mounted: function() {
     axios.get("/api/noticias").then(response => {
+      this.dados = response.data;
       let list = response.data.data;
       this.$store.commit("setNoticiasPrincipais", list);
     });
 
     axios.get("/api/noticias?page=2").then(response => {
-      this.last_page = response.data.last_page;
-
       let list = response.data.data;
       this.$store.commit("setNoticiasSemDestaque", list);
       this.loading = false;
@@ -63,12 +69,12 @@ export default {
   },
 
   methods:{
-    atualizarNoticias(page){
+    alterarPagina: function(link){
       this.loading = true;
-    axios.get("/api/noticias?"+page).then(response => {
-      let list = response.data.data;
-      console.log(response.data);
-      this.$store.commit("setNoticiasSemDestaque", list);
+      axios.get(link).then(response => {
+      let lista = response.data.data;
+      this.dados = response.data;
+      this.$store.commit("setNoticiasSemDestaque", lista);
       this.loading = false;
     });
     }
@@ -84,17 +90,19 @@ export default {
 
     .load{
       padding-left: 50%;
-      
-      
+    }
+
+    .page-link{
+      cursor: pointer;
     }
 
     .lds-dual-ring {
       margin-top: 25vh;
       margin-bottom: 25vh;
-  display: inline-block;
-  width: 64px;
-  height: 64px;
-}
+      display: inline-block;
+      width: 64px;
+      height: 64px;
+    }
 .lds-dual-ring:after {
   content: " ";
   display: block;

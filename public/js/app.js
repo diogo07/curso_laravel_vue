@@ -2984,11 +2984,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       loading: true,
-      last_page: 0
+      dados: []
     };
   },
   computed: {
@@ -3003,12 +3010,12 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     axios.get("/api/noticias").then(function (response) {
+      _this.dados = response.data;
       var list = response.data.data;
 
       _this.$store.commit("setNoticiasPrincipais", list);
     });
     axios.get("/api/noticias?page=2").then(function (response) {
-      _this.last_page = response.data.last_page;
       var list = response.data.data;
 
       _this.$store.commit("setNoticiasSemDestaque", list);
@@ -3017,15 +3024,15 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
-    atualizarNoticias: function atualizarNoticias(page) {
+    alterarPagina: function alterarPagina(link) {
       var _this2 = this;
 
       this.loading = true;
-      axios.get("/api/noticias?" + page).then(function (response) {
-        var list = response.data.data;
-        console.log(response.data);
+      axios.get(link).then(function (response) {
+        var lista = response.data.data;
+        _this2.dados = response.data;
 
-        _this2.$store.commit("setNoticiasSemDestaque", list);
+        _this2.$store.commit("setNoticiasSemDestaque", lista);
 
         _this2.loading = false;
       });
@@ -7534,10 +7541,10 @@ __webpack_require__.r(__webpack_exports__);
 
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 // imports
-
+exports.push([module.i, "@import url(https://fonts.googleapis.com/css?family=Poppins:800&display=swap);", ""]);
 
 // module
-exports.push([module.i, "\np,\r\nh5 {\r\n  /* color: white; */\r\n  /* background-color: black; */\n}\na:hover{\r\n  text-decoration: none;\r\n  color: white;\n}\r\n\r\n/* .carousel-caption{\r\n  \r\n  \r\n} */\r\n", ""]);
+exports.push([module.i, "\n.titulo{\n    font-size: 30pt;\n    font-family: 'Poppins', sans-serif;\n}\na:hover{\n  text-decoration: none;\n  color: white;\n}\n\n/* .carousel-caption{\n  \n  \n} */\n", ""]);
 
 // exports
 
@@ -7613,7 +7620,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#sem_destaque{\n        margin-top: 40px;\n}\n.load{\n      padding-left: 50%;\n}\n.lds-dual-ring {\n      margin-top: 25vh;\n      margin-bottom: 25vh;\n  display: inline-block;\n  width: 64px;\n  height: 64px;\n}\n.lds-dual-ring:after {\n  content: \" \";\n  display: block;\n  width: 46px;\n  height: 46px;\n  margin: 1px;\n  border-radius: 50%;\n  border: 5px solid #000;\n  border-color: #000 transparent #000 transparent;\n  -webkit-animation: lds-dual-ring 1.2s linear infinite;\n          animation: lds-dual-ring 1.2s linear infinite;\n}\n@-webkit-keyframes lds-dual-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}\n@keyframes lds-dual-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}\n", ""]);
+exports.push([module.i, "\n#sem_destaque{\n        margin-top: 40px;\n}\n.load{\n      padding-left: 50%;\n}\n.page-link{\n      cursor: pointer;\n}\n.lds-dual-ring {\n      margin-top: 25vh;\n      margin-bottom: 25vh;\n      display: inline-block;\n      width: 64px;\n      height: 64px;\n}\n.lds-dual-ring:after {\n  content: \" \";\n  display: block;\n  width: 46px;\n  height: 46px;\n  margin: 1px;\n  border-radius: 50%;\n  border: 5px solid #000;\n  border-color: #000 transparent #000 transparent;\n  -webkit-animation: lds-dual-ring 1.2s linear infinite;\n          animation: lds-dual-ring 1.2s linear infinite;\n}\n@-webkit-keyframes lds-dual-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}\n@keyframes lds-dual-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}\n", ""]);
 
 // exports
 
@@ -39375,9 +39382,13 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "carousel-caption d-none d-md-block" }, [
               _c("a", { attrs: { href: "/noticia/" + _vm.lista[0].id } }, [
-                _c("h5", [_vm._v(_vm._s(_vm.lista[0].titulo))]),
+                _c("h5", { staticClass: "titulo" }, [
+                  _vm._v(_vm._s(_vm.lista[0].titulo))
+                ]),
                 _vm._v(" "),
-                _c("p", [_vm._v(_vm._s(_vm.lista[0].descricao))])
+                _c("p", { staticClass: "descricao" }, [
+                  _vm._v(_vm._s(_vm.lista[0].descricao))
+                ])
               ])
             ])
           ]),
@@ -39390,9 +39401,13 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "carousel-caption d-none d-md-block" }, [
               _c("a", { attrs: { href: "/noticia/" + _vm.lista[1].id } }, [
-                _c("h5", [_vm._v(_vm._s(_vm.lista[1].titulo))]),
+                _c("h5", { staticClass: "titulo" }, [
+                  _vm._v(_vm._s(_vm.lista[1].titulo))
+                ]),
                 _vm._v(" "),
-                _c("p", [_vm._v(_vm._s(_vm.lista[1].descricao))])
+                _c("p", { staticClass: "descricao" }, [
+                  _vm._v(_vm._s(_vm.lista[1].descricao))
+                ])
               ])
             ])
           ]),
@@ -39405,9 +39420,13 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "carousel-caption d-none d-md-block" }, [
               _c("a", { attrs: { href: "/noticia/" + _vm.lista[2].id } }, [
-                _c("h5", [_vm._v(_vm._s(_vm.lista[2].titulo))]),
+                _c("h5", { staticClass: "titulo" }, [
+                  _vm._v(_vm._s(_vm.lista[2].titulo))
+                ]),
                 _vm._v(" "),
-                _c("p", [_vm._v(_vm._s(_vm.lista[2].descricao))])
+                _c("p", { staticClass: "descricao" }, [
+                  _vm._v(_vm._s(_vm.lista[2].descricao))
+                ])
               ])
             ])
           ])
@@ -39714,31 +39733,93 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-info",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.atualizarNoticias(_vm.last_page - 2)
-                      }
-                    }
-                  },
-                  [_vm._v("Anterior")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-info",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.atualizarNoticias(_vm.last_page)
-                      }
-                    }
-                  },
-                  [_vm._v("Próxima")]
+                  "nav",
+                  { attrs: { "aria-label": "Page navigation example" } },
+                  [
+                    _c("ul", { staticClass: "pagination" }, [
+                      _c(
+                        "li",
+                        {
+                          staticClass: "page-item",
+                          on: {
+                            click: function($event) {
+                              return _vm.alterarPagina(_vm.dados.first_page_url)
+                            }
+                          }
+                        },
+                        [
+                          _c("a", { staticClass: "page-link" }, [
+                            _vm._v("Primeiro")
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm.dados.prev_page_url
+                        ? _c(
+                            "li",
+                            {
+                              staticClass: "page-item",
+                              on: {
+                                click: function($event) {
+                                  return _vm.alterarPagina(
+                                    _vm.dados.prev_page_url
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("a", { staticClass: "page-link" }, [
+                                _vm._v(_vm._s(_vm.dados.current_page - 1))
+                              ])
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "page-item active" }, [
+                        _c("a", { staticClass: "page-link" }, [
+                          _vm._v(_vm._s(_vm.dados.current_page))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm.dados.next_page_url
+                        ? _c(
+                            "li",
+                            {
+                              staticClass: "page-item",
+                              on: {
+                                click: function($event) {
+                                  return _vm.alterarPagina(
+                                    _vm.dados.next_page_url
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("a", { staticClass: "page-link" }, [
+                                _vm._v(_vm._s(_vm.dados.current_page + 1))
+                              ])
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "li",
+                        {
+                          staticClass: "page-item",
+                          on: {
+                            click: function($event) {
+                              return _vm.alterarPagina(_vm.dados.last_page_url)
+                            }
+                          }
+                        },
+                        [
+                          _c("a", { staticClass: "page-link" }, [
+                            _vm._v("Último")
+                          ])
+                        ]
+                      )
+                    ])
+                  ]
                 )
               ],
               2
