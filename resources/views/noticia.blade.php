@@ -16,17 +16,20 @@
 
     <div id="app">    
         
-        <topo titulo="TI Notícias"><topo>
-        <login></login>
-        <!-- <container>
+        <nav id="menu" class="navbar navbar-dark bg-dark">
+            <a href="/" class=".navbar-light">TI Notícias</a>
+            
+        </nav>
+        <container>
             <noticia :dados='{{$noticia}}'></noticia>
-        </container>          -->
+        </container>         
         <rodape
                 titulo="TI Notícias"
                 descricao="O melhor conteúdo sobre tecnologia."
                 ano="2019"
                 link="http://github.com/diogo07"
-            ></rodape>
+        ></rodape>
+        
     </div>
 
     <script src="{{ asset('js/app.js') }}" defer></script>

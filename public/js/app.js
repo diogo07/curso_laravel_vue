@@ -2974,7 +2974,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      loading: true,
+      last_page: 0
+    };
+  },
   computed: {
     listaNoticiasPrincipais: function listaNoticiasPrincipais() {
       return this.$store.state.noticiasPrincipais;
@@ -2992,10 +3008,28 @@ __webpack_require__.r(__webpack_exports__);
       _this.$store.commit("setNoticiasPrincipais", list);
     });
     axios.get("/api/noticias?page=2").then(function (response) {
+      _this.last_page = response.data.last_page;
       var list = response.data.data;
 
       _this.$store.commit("setNoticiasSemDestaque", list);
+
+      _this.loading = false;
     });
+  },
+  methods: {
+    atualizarNoticias: function atualizarNoticias(page) {
+      var _this2 = this;
+
+      this.loading = true;
+      axios.get("/api/noticias?" + page).then(function (response) {
+        var list = response.data.data;
+        console.log(response.data);
+
+        _this2.$store.commit("setNoticiasSemDestaque", list);
+
+        _this2.loading = false;
+      });
+    }
   }
 });
 
@@ -7579,7 +7613,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#sem_destaque{\n    margin-top: 40px;\n}\n", ""]);
+exports.push([module.i, "\n#sem_destaque{\n        margin-top: 40px;\n}\n.load{\n      padding-left: 50%;\n}\n.lds-dual-ring {\n      margin-top: 25vh;\n      margin-bottom: 25vh;\n  display: inline-block;\n  width: 64px;\n  height: 64px;\n}\n.lds-dual-ring:after {\n  content: \" \";\n  display: block;\n  width: 46px;\n  height: 46px;\n  margin: 1px;\n  border-radius: 50%;\n  border: 5px solid #000;\n  border-color: #000 transparent #000 transparent;\n  -webkit-animation: lds-dual-ring 1.2s linear infinite;\n          animation: lds-dual-ring 1.2s linear infinite;\n}\n@-webkit-keyframes lds-dual-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}\n@keyframes lds-dual-ring {\n0% {\n    transform: rotate(0deg);\n}\n100% {\n    transform: rotate(360deg);\n}\n}\n", ""]);
 
 // exports
 
@@ -39231,12 +39265,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "div",
-      { staticClass: "col-sm-9 col-md-7 col-lg-5 mx-auto" },
-      [_vm._t("default")],
-      2
-    )
+    _c("div", { staticClass: "container" }, [_vm._t("default")], 2)
   ])
 }
 var staticRenderFns = []
@@ -39656,35 +39685,68 @@ var render = function() {
     [
       _vm._t("default"),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "container" },
-        [
-          _c("feed-principal", {
-            attrs: { lista: _vm.listaNoticiasPrincipais }
-          }),
-          _vm._v(" "),
-          _vm._l(_vm.listaNoticiasSemDestaque, function(noticia) {
-            return _c(
-              "div",
-              { attrs: { id: "sem_destaque" } },
+      _c("div", { staticClass: "container" }, [
+        this.loading == false
+          ? _c(
+              "span",
               [
-                _c("feed", {
-                  attrs: {
-                    id: noticia.id,
-                    url: noticia.path_image,
-                    titulo: noticia.titulo,
-                    descricao: noticia.descricao,
-                    atualizacao: noticia.created_at
-                  }
-                })
+                _c("feed-principal", {
+                  attrs: { lista: _vm.listaNoticiasPrincipais }
+                }),
+                _vm._v(" "),
+                _vm._l(_vm.listaNoticiasSemDestaque, function(noticia) {
+                  return _c(
+                    "div",
+                    { attrs: { id: "sem_destaque" } },
+                    [
+                      _c("feed", {
+                        attrs: {
+                          id: noticia.id,
+                          url: noticia.path_image,
+                          titulo: noticia.titulo,
+                          descricao: noticia.descricao,
+                          atualizacao: noticia.created_at
+                        }
+                      })
+                    ],
+                    1
+                  )
+                }),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-info",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.atualizarNoticias(_vm.last_page - 2)
+                      }
+                    }
+                  },
+                  [_vm._v("Anterior")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-info",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.atualizarNoticias(_vm.last_page)
+                      }
+                    }
+                  },
+                  [_vm._v("Próxima")]
+                )
               ],
-              1
+              2
             )
-          })
-        ],
-        2
-      )
+          : _c("span", { staticClass: "load" }, [
+              _c("div", { staticClass: "lds-dual-ring" })
+            ])
+      ])
     ],
     2
   )
