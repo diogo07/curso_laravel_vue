@@ -39624,7 +39624,7 @@ var render = function() {
   return _c("div", [
     _c(
       "nav",
-      { staticClass: "navbar navbar-dark bg-dark", attrs: { id: "menu" } },
+      { staticClass: "navbar navbar-dark bg-info", attrs: { id: "menu" } },
       [
         _c("a", { staticClass: ".navbar-light", attrs: { href: "/" } }, [
           _vm._v(_vm._s(_vm.titulo))
@@ -39854,7 +39854,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("footer", { staticClass: "page-footer font-small bg-dark pt-4" }, [
+  return _c("footer", { staticClass: "page-footer font-small bg-info pt-4" }, [
     _c("div", { staticClass: "container-fluid text-center text-md-left" }, [
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-md-6 mt-md-0 mt-3" }, [

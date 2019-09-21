@@ -1,6 +1,6 @@
 <template>
     <div >
-        <nav id="menu" class="navbar navbar-dark bg-dark">
+        <nav id="menu" class="navbar navbar-dark bg-info">
             <a href="/" class=".navbar-light">{{titulo}}</a>
             <a v-if="login" href="/login">Entrar</a>
             

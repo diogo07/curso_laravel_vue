@@ -1,5 +1,5 @@
 <template>
-<footer class="page-footer font-small bg-dark pt-4">
+<footer class="page-footer font-small bg-info pt-4">
 
   <!-- Footer Links -->
   <div class="container-fluid text-center text-md-left">
